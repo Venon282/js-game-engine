@@ -14,5 +14,5 @@
 //         spatial,
 //         max_distance,
 //         play_requested: false
-//     };
+//     }
 // }

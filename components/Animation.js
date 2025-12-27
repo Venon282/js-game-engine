@@ -13,5 +13,5 @@
 //         playing: true,
 //         direction: 1,
 //         onComplete: null
-//     };
+//     }
 // }
