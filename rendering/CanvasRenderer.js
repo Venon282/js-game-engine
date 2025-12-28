@@ -75,8 +75,8 @@ export class CanvasRenderer extends Renderer {
         }else{
             ctx.drawImage(
                 sprite.image,
-                0,//-w / 2,
-                0,//-h / 2,
+                -w / 2,
+                -h / 2,
                 w,
                 h
             )

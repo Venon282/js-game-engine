@@ -68,13 +68,13 @@ export class CollisionSystem {
         const b_a = this.world.getComponent(entity_a, 'Bounds')
         const b_b = this.world.getComponent(entity_b, 'Bounds')
 
-        const a_min_x = t_a.x + b_a.offset_x
-        const a_min_y = t_a.y + b_a.offset_y
+        const a_min_x = t_a.x + b_a.offset_x - b_a.width / 2
+        const a_min_y = t_a.y + b_a.offset_y - b_a.height / 2
         const a_max_x = a_min_x + b_a.width
         const a_max_y = a_min_y + b_a.height
 
-        const b_min_x = t_b.x + b_b.offset_x
-        const b_min_y = t_b.y + b_b.offset_y
+        const b_min_x = t_b.x + b_b.offset_x - b_b.width / 2
+        const b_min_y = t_b.y + b_b.offset_y - b_b.height / 2
         const b_max_x = b_min_x + b_b.width
         const b_max_y = b_min_y + b_b.height
 

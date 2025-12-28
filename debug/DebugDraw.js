@@ -80,8 +80,8 @@ export class DebugDraw {
             const t = this.world.getComponent(e, 'Transform')
             const b = this.world.getComponent(e, 'Bounds')
             const c = this.world.getComponent(e, 'Collider')
-            const x = t.x + (b.offset_x ?? 0)
-            const y = t.y + (b.offset_y ?? 0)
+            const x = t.x + (b.offset_x ?? 0) - b.width / 2
+            const y = t.y + (b.offset_y ?? 0) - b.height / 2
 
             ctx.strokeStyle = c?.is_trigger
                 ? this.colors.trigger
