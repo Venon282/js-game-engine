@@ -20,6 +20,7 @@ export class CollisionSystem {
 
         const len = entities.length
 
+        const collisions = []
         for (let i = 0; i < len; i++) {
             for (let j = i + 1; j < len; j++) {
                 const a = entities[i]
@@ -30,13 +31,19 @@ export class CollisionSystem {
                 const manifold = this._testAABB(a, b)
                 if (!manifold) continue
 
+
                 this.resolver.resolve(
                     a,
                     b,
                     manifold,
                     this.world
                 )
+                collisions.push({a, b})
+
             }
+        }
+        for(const collision of collisions){
+            this.world.events.emit('collision', collision)
         }
     }
 

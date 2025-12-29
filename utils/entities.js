@@ -13,7 +13,8 @@ export function createLivingEntity({world, image,
     health=10,
     x=0, y=0, rotation=0, scale_x=1.0, scale_y=1.0,
     width=null, height=null, opacity=1,
-    bwidth=null, bheight=null, offset_x=0, offset_y=0
+    bwidth=null, bheight=null, offset_x=0, offset_y=0,
+    vx=0, vy=0, vrotation=0
 }){
     /*
     image can be a function draw(ctx, w, h)
@@ -34,8 +35,8 @@ export function createLivingEntity({world, image,
         opacity: opacity,
         visible: true
     }))
-    world.addComponent(entity, 'Velocity', Velocity({vx: 0, vy:0, rotation:0}))
-    world.addComponent(entity, 'Health', Health({health}))
+    world.addComponent(entity, 'Velocity', Velocity({vx: vx, vy:vy, rotation:vrotation}))
+    world.addComponent(entity, 'Health', Health(health))
     world.addComponent(entity, 'Bounds', Bounds({
         width:bwidth??width,
         height:bheight??height,

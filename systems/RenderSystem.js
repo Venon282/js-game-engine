@@ -23,17 +23,17 @@ export class RenderSystem {
 
         this.renderer.begin(camera, transform)
 
-        for (const e of this.world.query(['Transform', 'Sprite'])) {
-            const sprite = this.world.getComponent(e, 'Sprite')
-            if (sprite.visible === false) continue
-
-            this.renderer.drawSprite(
-                this.world.getComponent(e, 'Transform'),
-                sprite
-            )
-        }
+        this._renderSprites("drawSprite", "Transform", "Sprite")
 
         this.renderer.end()
+
+        // Related to the view and not the camera
+        this.renderer.beginUI()
+        this._renderSprites("drawSprite", "UITransform", "Sprite")
+        this._renderSprites("drawText", "UITransform", "UIText")
+        this._renderSprites("drawProgress", "UITransform", "UIProgress")
+        this.renderer.end()
+
     }
 
     /* ------------------------------------------------------------ */
@@ -49,5 +49,17 @@ export class RenderSystem {
             }
         }
         return null
+    }
+
+    _renderSprites(method_name, transform_name, other_element_name){
+        for(const e of this.world.query([transform_name, other_element_name])){
+            const other_element = this.world.getComponent(e, other_element_name)
+            if (other_element.visible === false) continue
+
+            this.renderer[method_name](
+                this.world.getComponent(e, transform_name),
+                other_element
+            )
+        }
     }
 }

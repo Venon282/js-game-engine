@@ -12,6 +12,7 @@ export class CanvasRenderer extends Renderer {
             alpha: false,
             desynchronized: true
         })
+        console.log(this.ctx)
 
         if (!this.ctx) {
             throw new Error('Failed to get 2D context')
@@ -87,6 +88,66 @@ export class CanvasRenderer extends Renderer {
 
     end() {
         this.ctx.restore()
+    }
+
+    beginUI() {
+        const ctx = this.ctx
+
+        ctx.save()
+        ctx.setTransform(1, 0, 0, 1, 0, 0)
+
+        ctx.scale(this.pixel_ratio, this.pixel_ratio)
+    }
+
+    drawText(transform, text){
+        console.log('Draw ', text)
+        if (!text.value) return
+
+        const ctx = this.ctx
+
+        ctx.save()
+        ctx.fillStyle = text.color
+        ctx.font = text.font
+        ctx.textAlign = text.align
+        ctx.textBaseline = text.baseline
+
+        ctx.fillText(
+            text.value,
+            transform.x,
+            transform.y
+        )
+
+        ctx.restore()
+    }
+
+    drawProgress(transform, progress){
+        if (!progress.value) return
+
+        const ctx = this.ctx
+
+        ctx.save()
+
+        // Background
+        ctx.fillStyle = progress.background
+        ctx.fillRect(transform.x, transform.y, progress.width, progress.height)
+
+        // Fill
+        ctx.fillStyle = progress.color
+        const ratio = Math.max(0, Math.min(1, progress.value / progress.max))
+        ctx.fillRect(
+            transform.x,
+            transform.y,
+            progress.width * ratio,
+            progress.height
+        )
+
+        // Border
+        if (progress.border) {
+            ctx.strokeStyle = progress.border
+            ctx.strokeRect(transform.x, transform.y, progress.width, progress.height)
+        }
+
+        ctx.restore()
     }
 
     /* ------------------------------------------------------------ */
